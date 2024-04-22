@@ -1,15 +1,54 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 export const Register = (props) => {
+
+    const BASE_API_URI = `http://localhost:8080`;
+    const navigate = useNavigate();
+
+    const postData = async event => {
+        event.preventDefault()
+        try {
+            const response = await fetch(`${BASE_API_URI}/api/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    pass
+                }),
+            })
+
+            const { status } = response
+
+            const jsonData = await response.json()
+
+            if (status === 200) {
+                alert('Sign up successful')
+                setTimeout(() => {
+                    navigate('/login')
+                }, 4000)
+            } else {
+                alert('Oops !!! enter valid credentials')
+                // alert("Enter Valid Credentials.....");
+            }
+        } catch (error) {
+            console.log(error)
+            // alert("Enter valid credentials...");
+        }
+    }
+
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(email);
+        // e.preventDefault();
+        // console.log(email);
+        console.log("here");
     }
 
     return (
