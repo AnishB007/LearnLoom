@@ -5,6 +5,8 @@ require("./src/db/mongoose");
 require(`dotenv`).config();
 const bodyParser = require("body-parser");
 const userRouter = require("./src/routers/user");
+const materialRouter = require("./src/routers/material");
+
 const connectDB = require('./src/db/mongoose')
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +29,7 @@ app.post("/ping", (req, res) => {
 
 
 app.use("/api", userRouter);
-app.use("/api", courseRouter);
+app.use("/material", materialRouter);
 
 const port = 5054;
 connectDB().then(() => {

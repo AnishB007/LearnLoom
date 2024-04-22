@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const router = new express.Router();
+const userRouter = express.Router();
 const User = require("../models/user");
 const bcrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken");
@@ -15,7 +15,7 @@ const { SECRET_KEY } = process.env
 
 console.log(SECRET_KEY);
 // create user in database ==================================
-router.post("/signup", async function (req, res) {
+userRouter.post("/signup", async function (req, res) {
     console.log(req.body);
 
     const { name, email, pass } = req.body
@@ -51,7 +51,7 @@ router.post("/signup", async function (req, res) {
 
 
 // return jwt token to user for login ==================================
-router.post("/login", async function (req, res) {
+userRouter.post("/login", async function (req, res) {
     console.log(req.body);
 
     const { email, pass } = req.body
@@ -90,7 +90,7 @@ router.post("/login", async function (req, res) {
 })
 
 // read all users=====================================
-router.get("/users", function (req, res) {
+userRouter.get("/users", function (req, res) {
     User.find({}).then(function (result) {
         res.send(result);
     }).catch((err) => {
@@ -98,4 +98,4 @@ router.get("/users", function (req, res) {
     })
 })
 
-module.exports = router;
+module.exports = userRouter;
